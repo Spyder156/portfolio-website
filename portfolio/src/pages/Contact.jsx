@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
 function Contact() {
@@ -9,8 +9,19 @@ function Contact() {
     subject: '',
     message: ''
   });
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Trigger animations after component mounts - made faster
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -51,24 +62,30 @@ function Contact() {
     <div style={{
       minHeight: '100vh',
       background: 'transparent',
-      padding: '120px 20px 40px',
+      padding: '120px 20px 40px 280px', // Added left padding for sidebar
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      fontFamily: 'Space Grotesk, sans-serif'
     }}>
       <div style={{
         maxWidth: '800px',
         width: '100%'
       }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+        <div style={{ 
+          textAlign: 'center', 
+          marginBottom: '50px',
+          transform: isLoaded ? 'translateY(0)' : 'translateY(-50px)',
+          opacity: isLoaded ? 1 : 0,
+          transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+        }}>
           <h1 style={{
             fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-            fontWeight: '700',
-            background: 'linear-gradient(135deg, #646cff, #747bff)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '20px'
+            fontWeight: '900',
+            color: '#ffffff',
+            marginBottom: '20px',
+            fontFamily: 'Space Grotesk, sans-serif'
           }}>
             Let's Work Together
           </h1>
@@ -77,7 +94,9 @@ function Contact() {
             color: '#cccccc',
             maxWidth: '600px',
             margin: '0 auto',
-            lineHeight: '1.6'
+            lineHeight: '1.6',
+            fontWeight: '700',
+            fontFamily: 'Space Grotesk, sans-serif'
           }}>
             Have a project in mind? Want to collaborate on cutting-edge AI research? 
             Drop me a message and let's create something amazing together.
@@ -91,17 +110,23 @@ function Contact() {
           border: '1px solid rgba(255, 255, 255, 0.1)',
           borderRadius: '20px',
           padding: '40px',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+          transform: isLoaded ? 'translateY(0)' : 'translateY(50px)',
+          opacity: isLoaded ? 1 : 0,
+          transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s'
         }}>
           <form ref={form} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
             {/* Name Input */}
             <div>
-              <label style={{
-                display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px'
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '8px', 
+                color: '#cccccc', 
+                fontWeight: '800',
+                fontSize: '0.9rem',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontFamily: 'Space Grotesk, sans-serif'
               }}>
                 Your Name *
               </label>
@@ -114,22 +139,24 @@ function Contact() {
                 style={{
                   width: '100%',
                   padding: '15px 20px',
-                  background: 'rgba(255, 255, 255, 0.1)',
+                  background: 'rgba(255, 255, 255, 0.08)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '10px',
                   color: '#ffffff',
                   fontSize: '1rem',
+                  fontWeight: '600',
                   outline: 'none',
                   transition: 'all 0.3s ease',
+                  fontFamily: 'Space Grotesk, sans-serif',
                   boxSizing: 'border-box'
                 }}
                 onFocus={(e) => {
-                  e.target.style.border = '1px solid #646cff';
-                  e.target.style.background = 'rgba(100, 108, 255, 0.1)';
+                  e.target.style.border = '1px solid rgba(136, 136, 136, 0.5)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
                 }}
                 onBlur={(e) => {
                   e.target.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                 }}
                 placeholder="John Doe"
               />
@@ -137,12 +164,15 @@ function Contact() {
 
             {/* Email Input */}
             <div>
-              <label style={{
-                display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px'
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '8px', 
+                color: '#cccccc', 
+                fontWeight: '800',
+                fontSize: '0.9rem',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontFamily: 'Space Grotesk, sans-serif'
               }}>
                 Your Email *
               </label>
@@ -155,22 +185,24 @@ function Contact() {
                 style={{
                   width: '100%',
                   padding: '15px 20px',
-                  background: 'rgba(255, 255, 255, 0.1)',
+                  background: 'rgba(255, 255, 255, 0.08)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '10px',
                   color: '#ffffff',
                   fontSize: '1rem',
+                  fontWeight: '600',
                   outline: 'none',
                   transition: 'all 0.3s ease',
+                  fontFamily: 'Space Grotesk, sans-serif',
                   boxSizing: 'border-box'
                 }}
                 onFocus={(e) => {
-                  e.target.style.border = '1px solid #646cff';
-                  e.target.style.background = 'rgba(100, 108, 255, 0.1)';
+                  e.target.style.border = '1px solid rgba(136, 136, 136, 0.5)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
                 }}
                 onBlur={(e) => {
                   e.target.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                 }}
                 placeholder="john@example.com"
               />
@@ -178,12 +210,15 @@ function Contact() {
 
             {/* Subject Input */}
             <div>
-              <label style={{
-                display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px'
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '8px', 
+                color: '#cccccc', 
+                fontWeight: '800',
+                fontSize: '0.9rem',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontFamily: 'Space Grotesk, sans-serif'
               }}>
                 Subject *
               </label>
@@ -196,22 +231,24 @@ function Contact() {
                 style={{
                   width: '100%',
                   padding: '15px 20px',
-                  background: 'rgba(255, 255, 255, 0.1)',
+                  background: 'rgba(255, 255, 255, 0.08)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '10px',
                   color: '#ffffff',
                   fontSize: '1rem',
+                  fontWeight: '600',
                   outline: 'none',
                   transition: 'all 0.3s ease',
+                  fontFamily: 'Space Grotesk, sans-serif',
                   boxSizing: 'border-box'
                 }}
                 onFocus={(e) => {
-                  e.target.style.border = '1px solid #646cff';
-                  e.target.style.background = 'rgba(100, 108, 255, 0.1)';
+                  e.target.style.border = '1px solid rgba(136, 136, 136, 0.5)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
                 }}
                 onBlur={(e) => {
                   e.target.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                 }}
                 placeholder="Collaboration Opportunity"
               />
@@ -221,10 +258,13 @@ function Contact() {
             <div>
               <label style={{
                 display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px'
+                marginBottom: '8px', 
+                color: '#cccccc', 
+                fontWeight: '800',
+                fontSize: '0.9rem',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontFamily: 'Space Grotesk, sans-serif'
               }}>
                 Message *
               </label>
@@ -237,25 +277,26 @@ function Contact() {
                 style={{
                   width: '100%',
                   padding: '15px 20px',
-                  background: 'rgba(255, 255, 255, 0.1)',
+                  background: 'rgba(255, 255, 255, 0.08)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '10px',
                   color: '#ffffff',
                   fontSize: '1rem',
+                  fontWeight: '600',
                   outline: 'none',
                   transition: 'all 0.3s ease',
                   resize: 'vertical',
                   minHeight: '120px',
-                  fontFamily: 'inherit',
+                  fontFamily: 'Space Grotesk, sans-serif',
                   boxSizing: 'border-box'
                 }}
                 onFocus={(e) => {
-                  e.target.style.border = '1px solid #646cff';
-                  e.target.style.background = 'rgba(100, 108, 255, 0.1)';
+                  e.target.style.border = '1px solid rgba(136, 136, 136, 0.5)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
                 }}
                 onBlur={(e) => {
                   e.target.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                 }}
                 placeholder="Tell me about your project or idea..."
               />
@@ -267,20 +308,21 @@ function Contact() {
               disabled={isSubmitting}
               style={{
                 padding: '15px 30px',
-                background: isSubmitting ? 'rgba(100, 108, 255, 0.5)' : 'linear-gradient(45deg, #646cff, #747bff)',
+                background: isSubmitting ? 'rgba(136, 136, 136, 0.5)' : 'linear-gradient(45deg, #666666, #777777)',
                 border: 'none',
                 borderRadius: '10px',
                 color: '#ffffff',
                 fontSize: '1.1rem',
-                fontWeight: '600',
+                fontWeight: '800',
                 cursor: isSubmitting ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s ease',
-                marginTop: '10px'
+                marginTop: '10px',
+                fontFamily: 'Space Grotesk, sans-serif'
               }}
               onMouseEnter={(e) => {
                 if (!isSubmitting) {
                   e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 5px 15px rgba(100, 108, 255, 0.4)';
+                  e.target.style.boxShadow = '0 5px 15px rgba(136, 136, 136, 0.4)';
                 }
               }}
               onMouseLeave={(e) => {
@@ -302,7 +344,9 @@ function Contact() {
                 borderRadius: '10px',
                 color: '#4caf50',
                 fontSize: '1rem',
-                textAlign: 'center'
+                textAlign: 'center',
+                fontWeight: '700',
+                fontFamily: 'Space Grotesk, sans-serif'
               }}>
                 ✅ Message sent successfully! I'll get back to you soon.
               </div>
@@ -316,7 +360,9 @@ function Contact() {
                 borderRadius: '10px',
                 color: '#f44336',
                 fontSize: '1rem',
-                textAlign: 'center'
+                textAlign: 'center',
+                fontWeight: '700',
+                fontFamily: 'Space Grotesk, sans-serif'
               }}>
                 ❌ Something went wrong. Please try again or email me directly.
               </div>
@@ -328,13 +374,16 @@ function Contact() {
         <div style={{
           textAlign: 'center',
           marginTop: '40px',
-          color: '#999999'
+          color: '#999999',
+          transform: isLoaded ? 'translateY(0)' : 'translateY(30px)',
+          opacity: isLoaded ? 1 : 0,
+          transition: 'all 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.4s'
         }}>
-          <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>
+          <p style={{ fontSize: '0.9rem', marginBottom: '15px', fontWeight: '700', fontFamily: 'Space Grotesk, sans-serif' }}>
             📍 Based in India | 🌍 Available for remote work worldwide
           </p>
-          <p style={{ fontSize: '0.8rem' }}>
-            Or email me directly at: <a href="mailto:raghav@contineu.ai" style={{ color: '#646cff', textDecoration: 'none' }}>raghav@contineu.ai</a>
+          <p style={{ fontSize: '0.8rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: '600' }}>
+            Or email me directly at: <a href="mailto:raghav@contineu.ai" style={{ color: '#888888', textDecoration: 'none' }}>raghav@contineu.ai</a>
           </p>
         </div>
       </div>
