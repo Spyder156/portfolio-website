@@ -2,66 +2,74 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-function Stars(props) {
+function Stars() {
   const ref = useRef();
   
-  const [positions, colors] = useMemo(() => {
-    const positions = new Float32Array(5000 * 3);
-    const colors = new Float32Array(5000 * 3);
+  const particlesGeometry = useMemo(() => {
+    const positions = new Float32Array(2000 * 3); // Reduced particle count for better performance
     
-    for (let i = 0; i < 5000; i++) {
-      const r = 4 + Math.random() * 4;
-      const theta = Math.random() * 2 * Math.PI;
-      const phi = Math.acos(2 * Math.random() - 1);
-      const x = r * Math.sin(phi) * Math.cos(theta);
-      const y = r * Math.sin(phi) * Math.sin(theta);
-      const z = r * Math.cos(phi);
-      
-      positions[i * 3] = x;
-      positions[i * 3 + 1] = y;
-      positions[i * 3 + 2] = z;
-      
-      // White to blue gradient
-      colors[i * 3] = 0.8 + Math.random() * 0.2;     // R
-      colors[i * 3 + 1] = 0.8 + Math.random() * 0.2; // G
-      colors[i * 3 + 2] = 1.0;                       // B
+    for (let i = 0; i < 2000; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 10;     // x
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 10; // y  
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10; // z
     }
     
-    return [positions, colors];
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    
+    return geometry;
   }, []);
 
   useFrame((state, delta) => {
     if (ref.current) {
-      ref.current.rotation.x -= delta / 20;
-      ref.current.rotation.y -= delta / 25;
+      ref.current.rotation.x += delta * 0.05;
+      ref.current.rotation.y += delta * 0.05;
     }
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <points ref={ref} frustumCulled={false}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={5000}
-            array={positions}
-            itemSize={3}
+    <points ref={ref} geometry={particlesGeometry}>
+      <pointsMaterial
+        color="#ffffff"
+        size={0.02}
+        sizeAttenuation={true}
+        transparent={true}
+        opacity={0.6}
+      />
+    </points>
+  );
+}
+
+function FloatingCubes() {
+  const ref = useRef();
+  
+  useFrame((state, delta) => {
+    if (ref.current) {
+      ref.current.rotation.x += delta * 0.1;
+      ref.current.rotation.y += delta * 0.15;
+    }
+  });
+
+  return (
+    <group ref={ref}>
+      {[...Array(8)].map((_, i) => (
+        <mesh
+          key={i}
+          position={[
+            Math.sin(i * 0.8) * 3,
+            Math.cos(i * 0.8) * 3,
+            Math.sin(i * 0.4) * 2
+          ]}
+        >
+          <boxGeometry args={[0.1, 0.1, 0.1]} />
+          <meshBasicMaterial 
+            color="#646cff" 
+            transparent 
+            opacity={0.3}
+            wireframe
           />
-          <bufferAttribute
-            attach="attributes-color"
-            count={5000}
-            array={colors}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <pointsMaterial
-          size={0.015}
-          sizeAttenuation={true}
-          vertexColors={true}
-          transparent={true}
-          opacity={0.8}
-        />
-      </points>
+        </mesh>
+      ))}
     </group>
   );
 }
@@ -78,12 +86,12 @@ function DynamicBackground() {
       pointerEvents: 'none'
     }}>
       <Canvas 
-        camera={{ position: [0, 0, 1], fov: 50 }}
+        camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}
       >
-        <ambientLight intensity={0.1} />
-        <pointLight position={[10, 10, 10]} intensity={0.3} />
+        <ambientLight intensity={0.2} />
         <Stars />
+        <FloatingCubes />
       </Canvas>
     </div>
   );
