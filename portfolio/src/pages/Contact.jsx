@@ -50,7 +50,7 @@ function Contact() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%)',
+      background: 'transparent',
       padding: '120px 20px 40px',
       display: 'flex',
       justifyContent: 'center',
@@ -334,7 +334,7 @@ function Contact() {
             📍 Based in India | 🌍 Available for remote work worldwide
           </p>
           <p style={{ fontSize: '0.8rem' }}>
-            Or email me directly at: <a href="mailto:raghav@example.com" style={{ color: '#646cff', textDecoration: 'none' }}>raghav@example.com</a>
+            Or email me directly at: <a href="mailto:raghav@contineu.ai" style={{ color: '#646cff', textDecoration: 'none' }}>raghav@contineu.ai</a>
           </p>
         </div>
       </div>

@@ -3,17 +3,26 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-// import DynamicBackground from './components/DynamicBackground';
+
+// Background options - easily switch between different effects
+import DynamicBackground from './components/DynamicBackground'; // SLAM/Computer Vision effect
+import GridBackground from './components/GridBackground';       // Simple RGB Grid effect
+
+// Choose your background: 'slam' or 'grid'
+const BACKGROUND_TYPE = 'slam';
 
 function App() {
+  // Select background component based on type
+  const BackgroundComponent = BACKGROUND_TYPE === 'slam' ? DynamicBackground : GridBackground;
+  
   return (
     <Router>
       <div style={{ 
         minHeight: '100vh',
         position: 'relative',
-        background: 'linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%)'
+        background: 'transparent'
       }}>
-        {/* <DynamicBackground /> */}
+        <BackgroundComponent />
         
         {/* Navigation */}
         <nav style={{ 
@@ -128,7 +137,7 @@ function App() {
         </nav>
 
         {/* Main Content */}
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ position: 'relative', zIndex: 10 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />

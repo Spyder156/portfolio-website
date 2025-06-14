@@ -29,7 +29,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #000000;
+  background: #000000;
+  min-height: 100vh;
 }
 
 h1 {
@@ -46,8 +47,9 @@ h1 {
 
 #root {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   overflow: auto;
+  background: transparent;
 }
 
 .logo {
