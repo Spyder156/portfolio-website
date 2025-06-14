@@ -17,6 +17,29 @@ function App() {
   // Select background component based on type
   const BackgroundComponent = BACKGROUND_TYPE === 'slam' ? DynamicBackground : GridBackground;
   const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState(null);
+  
+  const handleContactMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    const timeout = setTimeout(() => {
+      setContactDropdownOpen(true);
+    }, 300); // Slower entrance delay
+    setDropdownTimeout(timeout);
+  };
+
+  const handleContactMouseLeave = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    const timeout = setTimeout(() => {
+      setContactDropdownOpen(false);
+    }, 200); // Slower exit delay
+    setDropdownTimeout(timeout);
+  };
   
   return (
     <Router>
@@ -35,7 +58,7 @@ function App() {
           width: '240px',
           height: '100vh',
           zIndex: 100,
-          padding: '40px 20px',
+          padding: '30px 20px',
           background: 'rgba(0, 0, 0, 0.3)',
           backdropFilter: 'blur(15px)',
           borderRight: '1px solid rgba(255, 255, 255, 0.1)',
@@ -45,9 +68,9 @@ function App() {
           {/* Profile Photo */}
           <Link to="/" style={{ textDecoration: 'none' }}>
             <div style={{ 
-              width: '120px',
-              height: '120px',
-              margin: '0 auto 20px auto',
+              width: '100px',
+              height: '100px',
+              margin: '0 auto 15px auto',
               background: 'rgba(255, 255, 255, 0.1)',
               borderRadius: '50%',
               display: 'flex',
@@ -66,7 +89,7 @@ function App() {
               e.target.style.border = '2px solid rgba(255, 255, 255, 0.1)';
             }}>
               <div style={{
-                fontSize: '3rem',
+                fontSize: '2.5rem',
                 color: '#666666'
               }}>
                 📸
@@ -77,11 +100,11 @@ function App() {
           {/* Hello Text */}
           <div style={{
             textAlign: 'center',
-            fontSize: '1.2rem',
+            fontSize: '1rem',
             fontWeight: '700',
             color: '#ffffff',
             fontFamily: 'Space Grotesk, sans-serif',
-            marginBottom: '40px'
+            marginBottom: '25px'
           }}>
             Hello
           </div>
@@ -91,7 +114,7 @@ function App() {
             listStyle: 'none', 
             display: 'flex', 
             flexDirection: 'column',
-            gap: '15px', 
+            gap: '8px', 
             padding: 0,
             margin: 0,
             flex: 1
@@ -102,10 +125,10 @@ function App() {
                 style={{ 
                   color: '#ffffff', 
                   textDecoration: 'none',
-                  fontSize: '1.1rem',
-                  fontWeight: '700',
-                  padding: '15px 20px',
-                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  padding: '12px 20px',
+                  borderRadius: '6px',
                   transition: 'all 0.3s ease',
                   fontFamily: 'Space Grotesk, sans-serif',
                   display: 'block',
@@ -131,10 +154,10 @@ function App() {
                 style={{ 
                   color: '#ffffff', 
                   textDecoration: 'none',
-                  fontSize: '1.1rem',
-                  fontWeight: '700',
-                  padding: '15px 20px',
-                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  padding: '12px 20px',
+                  borderRadius: '6px',
                   transition: 'all 0.3s ease',
                   fontFamily: 'Space Grotesk, sans-serif',
                   display: 'block',
@@ -160,10 +183,10 @@ function App() {
                 style={{ 
                   color: '#ffffff', 
                   textDecoration: 'none',
-                  fontSize: '1.1rem',
-                  fontWeight: '700',
-                  padding: '15px 20px',
-                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  padding: '12px 20px',
+                  borderRadius: '6px',
                   transition: 'all 0.3s ease',
                   fontFamily: 'Space Grotesk, sans-serif',
                   display: 'block',
@@ -183,211 +206,100 @@ function App() {
                 CV
               </Link>
             </li>
-            <li style={{ position: 'relative' }}>
-              <div
-                onMouseEnter={() => setContactDropdownOpen(true)}
-                onMouseLeave={() => setContactDropdownOpen(false)}
-                style={{ position: 'relative' }}
-              >
-                <Link 
-                  to="/contact" 
-                  style={{ 
-                    color: '#ffffff', 
-                    textDecoration: 'none',
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    padding: '15px 20px',
-                    borderRadius: '8px',
-                    transition: 'all 0.3s ease',
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    display: 'block',
-                    textAlign: 'left'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = 'rgba(136, 136, 136, 0.2)';
-                    e.target.style.color = '#cccccc';
-                    e.target.style.transform = 'translateX(5px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = 'transparent';
-                    e.target.style.color = '#ffffff';
-                    e.target.style.transform = 'translateX(0)';
-                  }}
+            <li>
+              <div>
+                <div
+                  onMouseEnter={handleContactMouseEnter}
+                  onMouseLeave={handleContactMouseLeave}
                 >
-                  Contact
-                </Link>
-                
-                {/* Contact Dropdown */}
-                {contactDropdownOpen && (
+                  <Link 
+                    to="/contact" 
+                    style={{ 
+                      color: '#ffffff', 
+                      textDecoration: 'none',
+                      fontSize: '1rem',
+                      fontWeight: '600',
+                      padding: '12px 20px',
+                      borderRadius: '6px',
+                      transition: 'all 0.3s ease',
+                      fontFamily: 'Space Grotesk, sans-serif',
+                      display: 'block',
+                      textAlign: 'left'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = 'rgba(136, 136, 136, 0.2)';
+                      e.target.style.color = '#cccccc';
+                      e.target.style.transform = 'translateX(5px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = 'transparent';
+                      e.target.style.color = '#ffffff';
+                      e.target.style.transform = 'translateX(0)';
+                    }}
+                  >
+                    Contact
+                  </Link>
+                  
+                  {/* Contact Dropdown - Smooth slide-down animation */}
                   <div style={{
-                    position: 'absolute',
-                    left: '100%',
-                    top: '0',
-                    marginLeft: '10px',
-                    background: 'rgba(0, 0, 0, 0.9)',
-                    backdropFilter: 'blur(15px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '8px',
-                    padding: '15px',
-                    minWidth: '180px',
-                    zIndex: 1000
+                    marginTop: '4px',
+                    marginLeft: '20px',
+                    paddingLeft: '15px',
+                    maxHeight: contactDropdownOpen ? '300px' : '0px',
+                    opacity: contactDropdownOpen ? 1 : 0,
+                    overflow: 'hidden',
+                    transform: contactDropdownOpen ? 'translateY(0)' : 'translateY(-10px)',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}>
                     <div style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '10px'
+                      gap: '4px',
+                      paddingTop: '8px'
                     }}>
-                      <a 
-                        href="mailto:raghav@contineu.ai"
-                        style={{
-                          color: '#cccccc',
-                          textDecoration: 'none',
-                          fontSize: '0.9rem',
-                          fontWeight: '600',
-                          padding: '8px 12px',
-                          borderRadius: '6px',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Space Grotesk, sans-serif'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.background = 'rgba(136, 136, 136, 0.2)';
-                          e.target.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.background = 'transparent';
-                          e.target.style.color = '#cccccc';
-                        }}
-                      >
-                        📧 Email
-                      </a>
-                      <a 
-                        href="https://x.com/038ac5a8b3364b7"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#cccccc',
-                          textDecoration: 'none',
-                          fontSize: '0.9rem',
-                          fontWeight: '600',
-                          padding: '8px 12px',
-                          borderRadius: '6px',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Space Grotesk, sans-serif'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.background = 'rgba(136, 136, 136, 0.2)';
-                          e.target.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.background = 'transparent';
-                          e.target.style.color = '#cccccc';
-                        }}
-                      >
-                        🐦 Twitter
-                      </a>
-                      <a 
-                        href="https://www.linkedin.com/in/suryanraghav/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#cccccc',
-                          textDecoration: 'none',
-                          fontSize: '0.9rem',
-                          fontWeight: '600',
-                          padding: '8px 12px',
-                          borderRadius: '6px',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Space Grotesk, sans-serif'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.background = 'rgba(136, 136, 136, 0.2)';
-                          e.target.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.background = 'transparent';
-                          e.target.style.color = '#cccccc';
-                        }}
-                      >
-                        💼 LinkedIn
-                      </a>
-                      <a 
-                        href="https://github.com/Spyder156"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#cccccc',
-                          textDecoration: 'none',
-                          fontSize: '0.9rem',
-                          fontWeight: '600',
-                          padding: '8px 12px',
-                          borderRadius: '6px',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Space Grotesk, sans-serif'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.background = 'rgba(136, 136, 136, 0.2)';
-                          e.target.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.background = 'transparent';
-                          e.target.style.color = '#cccccc';
-                        }}
-                      >
-                        💻 GitHub
-                      </a>
-                      <a 
-                        href="https://www.instagram.com/raghav.spyder/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#cccccc',
-                          textDecoration: 'none',
-                          fontSize: '0.9rem',
-                          fontWeight: '600',
-                          padding: '8px 12px',
-                          borderRadius: '6px',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Space Grotesk, sans-serif'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.background = 'rgba(136, 136, 136, 0.2)';
-                          e.target.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.background = 'transparent';
-                          e.target.style.color = '#cccccc';
-                        }}
-                      >
-                        📷 Instagram
-                      </a>
-                      <a 
-                        href="https://huggingface.co/Spyder156"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#cccccc',
-                          textDecoration: 'none',
-                          fontSize: '0.9rem',
-                          fontWeight: '600',
-                          padding: '8px 12px',
-                          borderRadius: '6px',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Space Grotesk, sans-serif'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.background = 'rgba(136, 136, 136, 0.2)';
-                          e.target.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.background = 'transparent';
-                          e.target.style.color = '#cccccc';
-                        }}
-                      >
-                        🤗 HuggingFace
-                      </a>
+                      {[
+                        { href: "mailto:raghav@contineu.ai", text: "Email" },
+                        { href: "https://x.com/038ac5a8b3364b7", text: "Twitter" },
+                        { href: "https://www.linkedin.com/in/suryanraghav/", text: "LinkedIn" },
+                        { href: "https://github.com/Spyder156", text: "GitHub" },
+                        { href: "https://www.instagram.com/raghav.spyder/", text: "Instagram" },
+                        { href: "https://huggingface.co/Spyder156", text: "HuggingFace" }
+                      ].map((link, index) => (
+                        <a 
+                          key={index}
+                          href={link.href}
+                          target={link.href.startsWith('mailto') ? '_self' : '_blank'}
+                          rel={link.href.startsWith('mailto') ? '' : 'noopener noreferrer'}
+                          style={{
+                            color: '#999999',
+                            textDecoration: 'none',
+                            fontSize: '0.85rem',
+                            fontWeight: '500',
+                            padding: '8px 12px',
+                            borderRadius: '4px',
+                            transition: 'all 0.3s ease',
+                            fontFamily: 'Space Grotesk, sans-serif',
+                            opacity: contactDropdownOpen ? 1 : 0,
+                            transform: contactDropdownOpen ? 'translateX(0)' : 'translateX(-20px)',
+                            transitionDelay: contactDropdownOpen ? `${index * 0.05}s` : '0s'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.background = 'rgba(136, 136, 136, 0.15)';
+                            e.target.style.color = '#cccccc';
+                            e.target.style.transform = 'translateX(5px)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.background = 'transparent';
+                            e.target.style.color = '#999999';
+                            e.target.style.transform = 'translateX(0)';
+                          }}
+                        >
+                          {link.text}
+                        </a>
+                      ))}
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             </li>
           </ul>
