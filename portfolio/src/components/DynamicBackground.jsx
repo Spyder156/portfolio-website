@@ -1,6 +1,5 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 function Stars(props) {
@@ -26,15 +25,17 @@ function Stars(props) {
 
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
-        <PointMaterial
+      <points ref={ref} frustumCulled={false} {...props}>
+        <bufferGeometry>
+          <bufferAttribute attachObject={['attributes', 'position']} {...sphere[0]} />
+        </bufferGeometry>
+        <pointsMaterial
           transparent
           color="#ffffff"
           size={0.02}
           sizeAttenuation={true}
-          depthWrite={false}
         />
-      </Points>
+      </points>
     </group>
   );
 }
