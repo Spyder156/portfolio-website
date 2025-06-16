@@ -9,13 +9,16 @@ import Contact from './pages/Contact';
 // Background options - easily switch between different effects
 import DynamicBackground from './components/DynamicBackground'; // SLAM/Computer Vision effect
 import GridBackground from './components/GridBackground';       // Simple RGB Grid effect
+import FluidBackground from './components/FluidBackground';     // WebGL Fluid Simulation effect
 
-// Choose your background: 'slam' or 'grid'
-const BACKGROUND_TYPE = 'slam';
+// Choose your background: 'slam', 'grid', or 'fluid'
+const BACKGROUND_TYPE = 'fluid';
 
 function App() {
   // Select background component based on type
-  const BackgroundComponent = BACKGROUND_TYPE === 'slam' ? DynamicBackground : GridBackground;
+  const BackgroundComponent = BACKGROUND_TYPE === 'slam' ? DynamicBackground : 
+                             BACKGROUND_TYPE === 'fluid' ? FluidBackground : 
+                             GridBackground;
   const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState(null);
   

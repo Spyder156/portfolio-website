@@ -18,7 +18,9 @@ function Projects() {
       description: "Advanced machine learning algorithms for particle detection and analysis using computer vision techniques at CERN.",
       tech: ["Python", "PyTorch", "Computer Vision", "Particle Physics"],
       status: "Ongoing",
-      icon: "🔬"
+      image: "/images/cern-project.jpg", // You'll upload this
+      github: "https://github.com/yourusername/cern-research",
+      demo: null
     },
     {
       id: 2,
@@ -26,7 +28,9 @@ function Projects() {
       description: "Real-time graphics rendering engine with machine learning optimization for performance and quality enhancement.",
       tech: ["C++", "CUDA", "Three.js", "Deep Learning"],
       status: "Development",
-      icon: "🎮"
+      image: "/images/graphics-engine.jpg", // You'll upload this
+      github: "https://github.com/yourusername/graphics-engine",
+      demo: null
     },
     {
       id: 3,
@@ -34,7 +38,9 @@ function Projects() {
       description: "Custom computer vision framework for real-time object detection and tracking with neural network integration.",
       tech: ["Python", "OpenCV", "TensorFlow", "Neural Networks"],
       status: "Completed",
-      icon: "👁️"
+      image: "/images/computer-vision.jpg", // You'll upload this
+      github: "https://github.com/yourusername/cv-framework",
+      demo: "https://cv-demo.com"
     },
     {
       id: 4,
@@ -42,14 +48,16 @@ function Projects() {
       description: "Modern portfolio website with interactive 3D background effects and smooth animations built with React.",
       tech: ["React", "Three.js", "Vite", "Tailwind CSS"],
       status: "Live",
-      icon: "🌐"
+      image: "/images/portfolio.jpg", // You'll upload this
+      github: "https://github.com/yourusername/portfolio",
+      demo: "https://yourportfolio.com"
     }
   ];
 
   return (
     <div style={{
       minHeight: '100vh',
-      padding: '120px 40px 40px 320px',
+      padding: '120px 40px 40px 320px',  
       color: 'white',
       fontFamily: 'Space Grotesk, sans-serif'
     }}>
@@ -60,26 +68,30 @@ function Projects() {
         {/* Header */}
         <div style={{ 
           marginBottom: '80px',
+          textAlign: 'center',
           transform: isLoaded ? 'translateY(0)' : 'translateY(-50px)',
           opacity: isLoaded ? 1 : 0,
           transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
         }}>
           <h1 style={{
-            fontSize: '2.25rem',
-            fontWeight: '700',
+            fontSize: '4.5rem',
+            fontWeight: '800',
             color: '#ffffff',
-            marginBottom: '16px',
+            marginBottom: '24px',
             fontFamily: 'Space Grotesk, sans-serif',
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.03em',
+            textTransform: 'uppercase'
           }}>
             Projects
           </h1>
           <p style={{
-            fontSize: '1rem',
+            fontSize: '1.1rem',
             color: '#888888',
             fontWeight: '400',
             fontFamily: 'Space Grotesk, sans-serif',
-            letterSpacing: '0.3px'
+            letterSpacing: '0.3px',
+            maxWidth: '600px',
+            margin: '0 auto'
           }}>
             Showcasing my work in AI, machine learning, and computer graphics
           </p>
@@ -94,167 +106,195 @@ function Projects() {
           {projects.map((project, index) => (
             <div 
               key={project.id}
+              className="project-card"
               style={{
-                background: 'rgba(255, 255, 255, 0.01)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: '2px',
-                padding: '48px 32px',
-                transition: 'all 0.2s ease',
+                position: 'relative',
+                height: '300px',
+                borderRadius: '8px',
+                overflow: 'hidden',
                 cursor: 'pointer',
                 transform: isLoaded ? 'translateY(0)' : 'translateY(50px)',
                 opacity: isLoaded ? 1 : 0,
+                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
                 transitionDelay: `${0.2 + index * 0.15}s`
               }}
-              onMouseEnter={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.transform = 'translateY(-8px)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                e.target.style.transform = 'translateY(0)';
-              }}
             >
-              {/* Project Header */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: '24px'
-              }}>
-                <div style={{ fontSize: '2.5rem', opacity: '0.7' }}>{project.icon}</div>
+              {/* Project Image */}
+              <div 
+                className="project-image"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundImage: `url(${project.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundColor: '#1a1a1a', // Fallback color
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                {/* Placeholder if no image */}
                 <div style={{
-                  background: project.status === 'Live' ? 'rgba(34, 197, 94, 0.1)' : 
-                            project.status === 'Completed' ? 'rgba(59, 130, 246, 0.1)' :
-                            'rgba(251, 191, 36, 0.1)',
-                  border: `1px solid ${project.status === 'Live' ? 'rgba(34, 197, 94, 0.3)' : 
-                                     project.status === 'Completed' ? 'rgba(59, 130, 246, 0.3)' :
-                                     'rgba(251, 191, 36, 0.3)'}`,
-                  borderRadius: '2px',
-                  padding: '6px 12px',
-                  fontSize: '0.75rem',
-                  fontWeight: '500',
-                  color: project.status === 'Live' ? '#22c55e' : 
-                        project.status === 'Completed' ? '#3b82f6' : '#fbbf24',
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  letterSpacing: '0.5px',
-                  textTransform: 'uppercase'
+                  textAlign: 'center',
+                  color: '#666666',
+                  fontFamily: 'Space Grotesk, sans-serif'
                 }}>
-                  {project.status}
+                  <div style={{ fontSize: '3rem', marginBottom: '16px', opacity: '0.6' }}>📸</div>
+                  <div style={{ fontSize: '0.875rem', fontWeight: '500', letterSpacing: '0.5px' }}>
+                    Upload Project Image
+                  </div>
                 </div>
               </div>
 
-              {/* Project Content */}
-              <h3 style={{
-                fontSize: '1.5rem',
-                fontWeight: '600',
-                color: '#ffffff',
-                marginBottom: '16px',
-                fontFamily: 'Space Grotesk, sans-serif',
-                letterSpacing: '-0.01em',
-                lineHeight: '1.3'
-              }}>
-                {project.title}
-              </h3>
-
-              <p style={{
-                fontSize: '0.925rem',
-                color: '#aaaaaa',
-                lineHeight: '1.6',
-                marginBottom: '32px',
-                fontWeight: '400',
-                fontFamily: 'Space Grotesk, sans-serif',
-                letterSpacing: '0.3px'
-              }}>
-                {project.description}
-              </p>
-
-              {/* Tech Stack */}
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '8px',
-                marginBottom: '32px'
-              }}>
-                {project.tech.map((tech, techIndex) => (
-                  <span 
-                    key={techIndex}
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      borderRadius: '2px',
-                      padding: '8px 12px',
-                      fontSize: '0.75rem',
-                      fontWeight: '500',
-                      color: '#ffffff',
-                      fontFamily: 'Space Grotesk, sans-serif',
-                      letterSpacing: '0.3px'
-                    }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* Action Buttons */}
-              <div style={{
-                display: 'flex',
-                gap: '12px'
-              }}>
-                <button
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    borderRadius: '2px',
-                    padding: '12px 20px',
+              {/* Hover Overlay */}
+              <div 
+                className="project-overlay"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  backdropFilter: 'blur(3px)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: '24px',
+                  opacity: 0,
+                  clipPath: 'inset(100% 0 0 0)',
+                  transition: 'opacity 0.4s ease, clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  pointerEvents: 'none'
+                }}
+              >
+                {/* Centered Content */}
+                <div style={{ 
+                  textAlign: 'center', 
+                  maxWidth: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {/* Title */}
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: '700',  
                     color: '#ffffff',
-                    fontSize: '0.875rem',
-                    fontWeight: '500',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
+                    marginBottom: '12px',
                     fontFamily: 'Space Grotesk, sans-serif',
-                    letterSpacing: '0.5px',
-                    textTransform: 'uppercase'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = 'rgba(255, 255, 255, 0.08)';
-                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                  }}
-                >
-                  View Details
-                </button>
-                
-                {project.status === 'Live' && (
-                  <button
-                    style={{
-                      background: '#ffffff',
-                      border: 'none',
-                      borderRadius: '2px',
-                      padding: '12px 20px',
-                      color: '#000000',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
+                    letterSpacing: '-0.02em',
+                    lineHeight: '1.2',
+                    textAlign: 'center'
+                  }}>
+                    {project.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p style={{
+                    fontSize: '0.85rem',
+                    color: '#cccccc',
+                    lineHeight: '1.4',
+                    marginBottom: '16px',
+                    fontWeight: '400',
+                    fontFamily: 'Space Grotesk, sans-serif',
+                    letterSpacing: '0.3px',
+                    textAlign: 'center',
+                    maxWidth: '95%'
+                  }}>
+                    {project.description}
+                  </p>
+
+                  {/* Tech Stack */}
+                  <div style={{
+                    marginBottom: '20px',
+                    textAlign: 'center'
+                  }}>
+                    <p style={{
+                      fontSize: '0.75rem',
+                      color: '#aaaaaa',
                       fontFamily: 'Space Grotesk, sans-serif',
+                      fontWeight: '400',
                       letterSpacing: '0.5px',
-                      textTransform: 'uppercase'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = '#f0f0f0';
-                      e.target.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = '#ffffff';
-                      e.target.style.transform = 'translateY(0)';
-                    }}
-                  >
-                    Live Demo
-                  </button>
-                )}
+                      lineHeight: '1.3'
+                    }}>
+                      {project.tech.join(' • ')}
+                    </p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div style={{
+                    display: 'flex',
+                    gap: '10px',
+                    justifyContent: 'center'
+                  }}>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.15)',
+                          border: '1px solid rgba(255, 255, 255, 0.25)',
+                          borderRadius: '4px',
+                          padding: '8px 16px',
+                          color: '#ffffff',
+                          fontSize: '0.75rem',
+                          fontWeight: '500',
+                          textDecoration: 'none',
+                          transition: 'all 0.2s ease',
+                          fontFamily: 'Space Grotesk, sans-serif',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = 'rgba(255, 255, 255, 0.25)';
+                          e.target.style.borderColor = 'rgba(255, 255, 255, 0.35)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = 'rgba(255, 255, 255, 0.15)';
+                          e.target.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+                        }}
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          background: '#ffffff',
+                          border: 'none',
+                          borderRadius: '4px',
+                          padding: '8px 16px',
+                          color: '#000000',
+                          fontSize: '0.75rem',
+                          fontWeight: '500',
+                          textDecoration: 'none',
+                          transition: 'all 0.2s ease',
+                          fontFamily: 'Space Grotesk, sans-serif',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = '#f0f0f0';
+                          e.target.style.transform = 'translateY(-1px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = '#ffffff';
+                          e.target.style.transform = 'translateY(0)';
+                        }}
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -363,6 +403,37 @@ function Projects() {
           </div>
         </div>
       </div>
+
+      {/* Add custom CSS for hover effects */}
+      <style>{`
+        .project-card:hover .project-overlay {
+          opacity: 1 !important;
+          clip-path: inset(0 0 0 0) !important;
+          pointer-events: auto !important;
+        }
+        
+        .project-card:hover .project-image {
+          transform: scale(1.03) !important;
+        }
+        
+        .project-overlay {
+          transition: opacity 0.4s ease, clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .project-image {
+          transition: transform 0.3s ease;
+        }
+        
+        /* Smooth hover trigger */
+        .project-card {
+          transition: all 0.2s ease;
+        }
+        
+        .project-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+      `}</style>
     </div>
   );
 }
