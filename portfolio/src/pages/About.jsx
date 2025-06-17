@@ -17,7 +17,8 @@ function About() {
       minHeight: '100vh',
       padding: '120px 40px 40px 320px', // Added left padding for sidebar
       color: 'white',
-      fontFamily: 'Space Grotesk, sans-serif'
+      fontFamily: 'Space Grotesk, sans-serif',
+      pointerEvents: 'none'
     }}>
       <div style={{
         maxWidth: '1400px',
@@ -67,7 +68,8 @@ function About() {
             borderRadius: '2px',
             padding: '64px 48px',
             textAlign: 'center',
-            transition: 'all 0.2s ease'
+            transition: 'all 0.2s ease',
+            pointerEvents: 'auto'
           }}
           onMouseEnter={(e) => {
             e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
@@ -114,7 +116,8 @@ function About() {
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
             gap: '24px',
-            marginTop: '48px'
+            marginTop: '48px',
+            pointerEvents: 'auto'
           }}>
             {[
               { icon: '🎓', title: 'Education', value: 'TBD' },

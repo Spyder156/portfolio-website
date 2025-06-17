@@ -14,6 +14,8 @@ import FluidBackground from './components/FluidBackground';     // WebGL Fluid S
 // Choose your background: 'slam', 'grid', or 'fluid'
 const BACKGROUND_TYPE = 'fluid';
 
+
+
 function App() {
   // Select background component based on type
   const BackgroundComponent = BACKGROUND_TYPE === 'slam' ? DynamicBackground : 
@@ -137,6 +139,7 @@ function App() {
                   display: 'block',
                   textAlign: 'left'
                 }}
+
                 onMouseEnter={(e) => {
                   e.target.style.background = 'rgba(136, 136, 136, 0.2)';
                   e.target.style.color = '#cccccc';
@@ -325,8 +328,14 @@ function App() {
           </div>
         </nav>
 
+
+
         {/* Main Content */}
-        <div style={{ position: 'relative', zIndex: 10 }}>
+        <div style={{ 
+          position: 'relative', 
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

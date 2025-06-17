@@ -15,9 +15,10 @@ function CV() {
   return (
     <div style={{
       minHeight: '100vh',
-      padding: '120px 20px 40px 280px', // Added left padding for sidebar
+      padding: '120px 40px 40px 320px',
       color: 'white',
-      fontFamily: 'Space Grotesk, sans-serif'
+      fontFamily: 'Space Grotesk, sans-serif',
+      pointerEvents: 'none'
     }}>
       <div style={{
         maxWidth: '1000px',
@@ -105,7 +106,8 @@ function CV() {
             display: 'flex',
             justifyContent: 'center',
             gap: '20px',
-            marginTop: '20px'
+            marginTop: '20px',
+            pointerEvents: 'auto'
           }}>
             <button style={{
               padding: '15px 30px',

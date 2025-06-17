@@ -55,7 +55,8 @@ function Contact() {
       minHeight: '100vh',
       padding: '120px 40px 40px 320px',
       color: 'white',
-      fontFamily: 'Space Grotesk, sans-serif'
+      fontFamily: 'Space Grotesk, sans-serif',
+      pointerEvents: 'none'
     }}>
       <div style={{
         maxWidth: '1400px',
@@ -130,7 +131,8 @@ function Contact() {
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '24px'
+              gap: '24px',
+              pointerEvents: 'auto'
             }}>
               {[
                 { 
@@ -270,7 +272,8 @@ function Contact() {
               border: '1px solid rgba(255, 255, 255, 0.08)',
               borderRadius: '2px',
               padding: '48px 40px',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              pointerEvents: 'auto'
             }}>
               <h2 style={{
                 fontSize: '1.75rem',

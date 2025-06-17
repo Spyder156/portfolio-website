@@ -62,7 +62,8 @@ function Home() {
 
   return (
     <div style={{ 
-      fontFamily: 'Space Grotesk, sans-serif'
+      fontFamily: 'Space Grotesk, sans-serif',
+      pointerEvents: 'none'
     }}>
       {/* Hero Section */}
       <section 
@@ -75,7 +76,8 @@ function Home() {
           padding: '0 40px 0 320px',
           position: 'relative',
           transform: `translateY(${scrollProgress * -50}px)`,
-          opacity: 1 - scrollProgress * 0.3
+          opacity: 1 - scrollProgress * 0.3,
+          pointerEvents: 'none'
         }}
       >
         <div style={{
@@ -97,7 +99,7 @@ function Home() {
               fontSize: '1.5rem',
               color: '#aaaaaa',
               fontWeight: '700',
-              marginBottom: '-20px',
+              marginBottom: '-10px',
               fontFamily: 'Space Grotesk, sans-serif',
               letterSpacing: '0.5px',
               transform: isLoaded ? 'translateY(0)' : 'translateY(30px)',
@@ -111,6 +113,7 @@ function Home() {
               fontSize: '4.5rem',
               fontWeight: '800',
               lineHeight: '0.9',
+              marginTop: '10px',
               marginBottom: '48px',
               color: '#ffffff',
               fontFamily: 'Space Grotesk, sans-serif',
@@ -162,7 +165,8 @@ function Home() {
               gap: '16px',
               transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
               opacity: isLoaded ? 1 : 0,
-              transition: 'all 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s'
+              transition: 'all 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s',
+              pointerEvents: 'auto'
             }}>
               <a 
                 href="/projects"
@@ -247,7 +251,20 @@ function Home() {
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-              backdropFilter: 'blur(10px)'
+              backdropFilter: 'blur(10px)',
+              cursor: 'pointer',
+              pointerEvents: 'auto'
+            }}
+            onClick={() => {
+              // Trigger random splats on the WebGL background
+              const iframe = document.querySelector('iframe[src="/webgl-fluid/index.html"]');
+              if (iframe && iframe.contentWindow) {
+                try {
+                  iframe.contentWindow.postMessage({ action: 'randomSplats', amount: parseInt(Math.random() * 20) + 5 }, '*');
+                } catch (e) {
+                  console.log('Could not trigger random splats:', e);
+                }
+              }
             }}
             onMouseEnter={(e) => {
               e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';

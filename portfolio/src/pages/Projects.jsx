@@ -59,7 +59,8 @@ function Projects() {
       minHeight: '100vh',
       padding: '120px 40px 40px 320px',  
       color: 'white',
-      fontFamily: 'Space Grotesk, sans-serif'
+      fontFamily: 'Space Grotesk, sans-serif',
+      pointerEvents: 'none'
     }}>
       <div style={{
         maxWidth: '1400px',
@@ -116,7 +117,8 @@ function Projects() {
                 transform: isLoaded ? 'translateY(0)' : 'translateY(50px)',
                 opacity: isLoaded ? 1 : 0,
                 transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                transitionDelay: `${0.2 + index * 0.15}s`
+                transitionDelay: `${0.2 + index * 0.15}s`,
+                pointerEvents: 'auto'
               }}
             >
               {/* Project Image */}
@@ -339,7 +341,8 @@ function Projects() {
             display: 'flex',
             gap: '16px',
             justifyContent: 'center',
-            flexWrap: 'wrap'
+            flexWrap: 'wrap',
+            pointerEvents: 'auto'
           }}>
             <a 
               href="/contact"
