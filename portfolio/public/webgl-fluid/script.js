@@ -1171,6 +1171,8 @@ multipleSplats(parseInt(Math.random() * 20) + 5);
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
+let isInitialized = false;
+let frameCount = 0;
 update();
 
 function update () {
@@ -1182,6 +1184,18 @@ function update () {
     if (!config.PAUSED)
         step(dt);
     render(null);
+    
+    // Signal parent window when WebGL is ready for interactions
+    if (!isInitialized) {
+        frameCount++;
+        if (frameCount >= 5) { // Wait for 5 frames to ensure everything is properly rendered
+            isInitialized = true;
+            if (window.parent) {
+                window.parent.postMessage({ type: 'webgl-ready' }, '*');
+            }
+        }
+    }
+    
     requestAnimationFrame(update);
 }
 
